@@ -28,3 +28,6 @@ lines = LOAD 'data.csv' USING PigStorage(',')
             f5:chararray,
             f6:int
     );
+A = FOREACH lines GENERATE CONCAT(f2,' ',f5) AS columna;
+B = FILTER A BY STARTSWITH (columna,'Z');
+STORE B INTO 'output'
