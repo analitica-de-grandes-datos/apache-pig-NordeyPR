@@ -20,3 +20,17 @@ $ pig -x local -f pregunta.pig
 
 */
 
+lines = LOAD 'data.csv' USING PigStorage(',')
+    AS (
+            f1:int,
+            f2:chararray,
+            f3:chararray,
+            f4:chararray,
+            f5:chararray,
+            f6:int
+    );
+
+
+A = FOREACH lines GENERATE CONCAT(f2,' ',f5) AS columna;
+B = FILTER A BY STARTSWITH (columna,'Z');
+STORE B INTO 'output';

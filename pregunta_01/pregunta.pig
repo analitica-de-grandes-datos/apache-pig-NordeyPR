@@ -12,3 +12,7 @@ $ pig -x local -f pregunta.pig
 
         >>> Escriba su respuesta a partir de este punto <<<
 */
+u = LOAD 'data.tsv' AS (f1:CHARARRAY);
+grouped = GROUP u BY f1;
+wordcount = FOREACH grouped GENERATE group, COUNT(u);
+STORE wordcount INTO 'output' USING PigStorage(',');

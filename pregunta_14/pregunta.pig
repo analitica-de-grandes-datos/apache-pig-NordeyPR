@@ -19,4 +19,7 @@ evaluación, pig sera eejcutado ejecutado en modo local:
 $ pig -x local -f pregunta.pig
 
 */
-
+lines = LOAD 'data.csv' USING PigStorage (',') AS (f1:INT, f2:CHARARRAY, f3:CHARARRAY, f4:DATETIME, f5:CHARARRAY);
+extraer = FOREACH lines GENERATE f5 as lines;
+b = FILTER extraer BY NOT STARTSWITH (lines,'b');
+STORE b INTO 'output';

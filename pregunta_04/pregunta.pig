@@ -28,3 +28,7 @@ $ pig -x local -f pregunta.pig
 
          >>> Escriba su respuesta a partir de este punto <<<
 */
+u = LOAD 'data.csv' USING PigStorage(',') AS (f1:INT , f2:INT , f3: chararray);
+s = LIMIT u 10;
+o = ORDER s BY f1,f2,f3;
+STORE o INTO 'output' USING PigStorage(',');
