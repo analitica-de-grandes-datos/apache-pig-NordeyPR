@@ -13,10 +13,9 @@ $ pig -x local -f pregunta.pig
 
         >>> Escriba su respuesta a partir de este punto <<<
 */
-u = LOAD 'data.tsv'
-    AS (f1:CHARARRAY, f2:CHARARRAY, f3:MAP[]);
-s = foreach u generate f3;
-r = foreach s generate KEYSET($0) as item;
-m = GROUP r by item;
-b = FOREACH m GENERATE TOTUPLE(r);
-DUMP b;
+u = LOAD 'data.tsv' AS (f1:CHARARRAY , f2:CHARARRAY , f3:MAP[CHARARRAY]);
+s = FOREACH u GENERATE FLATTEN(f3);
+r = GROUP s BY key;
+C = FOREACH r GENERATE group, COUNT(s);
+
+STORE C INTO 'output' USING PigStorage(',');
