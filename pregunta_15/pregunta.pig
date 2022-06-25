@@ -19,6 +19,7 @@ evaluación, pig sera eejcutado ejecutado en modo local:
 $ pig -x local -f pregunta.pig
 
 */
+
 lines = LOAD 'data.csv' USING PigStorage(',')
     AS (
             f1:int,
@@ -30,4 +31,6 @@ lines = LOAD 'data.csv' USING PigStorage(',')
     );
 A = FOREACH lines GENERATE CONCAT(f2,' ',f5) AS columna;
 B = FILTER A BY STARTSWITH (columna,'Z');
-STORE B INTO 'output'
+STORE B INTO 'output' USING PigStorage(',')
+
+
